@@ -9,43 +9,28 @@ class NodeTestCase(unittest.TestCase):
     Holds all the test cases for the interview_node module
     """
 
-    root = None
-
-    def setUp(self):
-        """
-        Construct stuff
-        """
-        self.root = InterviewNode()
-
-
-    def test_create(self):
-        """
-        Test creation of the graph
-        """
-        assert self.root is not None, "Create the root node"
-
-
     def test_add_child(self):
         """
         Test adding a child to a node
         """
+        root = InterviewNode()
         new_node = InterviewNode()
 
-        self.root.add_child(new_node)
+        root.add_child(new_node)
 
-        assert new_node in self.root.get_children(), "Ensure the node is now a child"
+        assert new_node in root.get_children(), "Ensure the node is now a child"
 
 
     def test_get_children(self):
         """
         Test getting the collection of children from parents
         """
-
+        root = InterviewNode()
         new_node = InterviewNode()
         assert len(new_node.get_children()) == 0, "A new node should have 0 children"
 
-        self.root.add_child(new_node)
-        assert len(self.root.get_children()) == 1, "There should be 1 node after adding one"
+        root.add_child(new_node)
+        assert len(root.get_children()) == 1, "There should be 1 node after adding one"
         
 
     def test_complex_graph(self):
