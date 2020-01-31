@@ -21,6 +21,20 @@ class NodeTestCase(unittest.TestCase):
         assert new_node in root.get_children(), "Ensure the node is now a child"
 
 
+    def test_add_child_cyclic(self):
+        """
+        Test attempting to add children that are already in this graph
+        """
+        root = InterviewNode()
+        child = InterviewNode()
+        grandchild = InterviewNode()
+
+        child.add_child(grandchild)
+        grandchild.add_child(root)
+        with self.assertRaises(ValueError):
+            root.add_child(child)
+
+
     def test_get_children(self):
         """
         Test getting the collection of children from parents
@@ -63,10 +77,10 @@ class NodeTestCase(unittest.TestCase):
 
     def test_get_descendants(self):
         """
-         
+        Tests for recursive search of descendants
         """
         root = InterviewNode()
-        assert len(root.get_descendants()) == 0, "An empty node should have no children"
+        assert len(root.get_descendants()) == 0, "An empty node shouild have no descendants"
 
         child = InterviewNode()
         grandchild = InterviewNode()
@@ -76,11 +90,10 @@ class NodeTestCase(unittest.TestCase):
         child.add_child(grandchild)
         grandchild.add_child(great_grandchild)
         descendants = root.get_descendants()
+
         assert len(descendants) == 3
         assert child in descendants
         assert grandchild in descendants
         assert great_grandchild in descendants
-
-
 
 

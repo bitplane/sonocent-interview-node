@@ -1,10 +1,10 @@
 """
-Module for interview test node thingy
+Module for nodes in the DAG project
 """
 
 class InterviewNode(object):
     """
-    Simple class for a node in a graph
+    Simple class for a node in a directed asyclic graph
     """
 
     _children = None
@@ -20,6 +20,15 @@ class InterviewNode(object):
         """
         Add the child to this parent
         """
+        if other is self:
+            raise ValueError("Can't add a node to itself")
+
+        if other in self._children:
+            raise ValueError("This node can't contain a reference to itself")
+
+        if self in other.get_descendants():
+            raise ValueError("Can't add cyclic references to a DAG")
+
         self._children.add(other)
 
 
@@ -28,6 +37,7 @@ class InterviewNode(object):
         Returns children of this node
         """
         return self._children
+
 
     def get_descendants(self):
         """
@@ -41,8 +51,4 @@ class InterviewNode(object):
                 ret = ret | child.get_descendants()
 
         return ret
-
-
-
-
 
