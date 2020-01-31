@@ -6,12 +6,12 @@ from interview_node import InterviewNode
 
 class NodeTestCase(unittest.TestCase):
     """
-    Holds all the test cases for the interview_node module
+    Holds all the test cases for the interview_node class
     """
 
     def test_add_child(self):
         """
-        Test adding a child to a node
+        Test simple case of adding a child to a node
         """
         root = InterviewNode()
         new_node = InterviewNode()
@@ -34,6 +34,27 @@ class NodeTestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             root.add_child(child)
 
+    def test_add_child_self_reference(self):
+        """
+        Test adding a node to itself
+        """
+        root = InterviewNode()
+
+        with self.assertRaises(ValueError):
+            root.add_child(root)
+
+    
+    def test_add_child_duplicate(self):
+        """
+        Test adding the same node to the same parent twise
+        """
+        root = InterviewNode()
+        child = InterviewNode()
+        root.add_child(child)
+
+        with self.assertRaises(ValueError):
+            root.add_child(child)
+        
 
     def test_get_children(self):
         """
